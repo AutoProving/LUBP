@@ -1,0 +1,5 @@
+g++ -c -I /home/micky/boost_1_74_0 -o randn.o randn.cpp
+g++ -c -I /home/micky/boost_1_74_0 -o mat_operations.o mat_operations.cpp
+g++ -c -I /home/micky/boost_1_74_0 -o LUBP.o LUBP.cpp
+
+g++ -o lubp randn.o mat_operations.o LUBP.o -lm
