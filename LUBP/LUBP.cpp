@@ -144,7 +144,7 @@ void readBranchingProgram(int &matdim, int &l, int &s, int &c, vector<int> &Indi
         exit(20);
     }
     // for testing purposes
-    printBranchingProgram(matdim,l,s,c,Indices,instructions,"resultTest.txt");
+    //printBranchingProgram(matdim,l,s,c,Indices,instructions,"resultTest.txt");
 }
 
 
