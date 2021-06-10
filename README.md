@@ -2,6 +2,51 @@
 
 LUBP implements an heuristic for the problem of learning unitary branching programs.
 
+# Usage
+
+The program LUBP.exe is a stand-alone executable which should run without problems on Ubuntu 18.04 or greater.
+Please note that despite the ".exe" extension, this executable will not run on Windows.
+
+If you prefer to compile the program yourself, please follow the instructions in Section **Compilation**. 
+
+To access the help menu, please run. 
+
+```
+./LUBP.exe -help
+```
+
+There are three ways in which our program can be used. 
+
+- 1) To learn branching programs from a given dataset using a random initial 
+branching program. With this in mind, execute
+
+```
+./LUBP.exe -mode learn -data [dataSetFilename] -d [Dimension] -w [Window Size] -t [Time] -ma [Accuracy] -mi [Max Iterations] -mti [Max Total Iterations]
+
+where 
+        -f    Input filename (MANDATORY)(requires formated input file)
+        -d    Matrix dimension (positive integer)
+        -w    Window size (positive integer)
+        -t    Killing time in seconds (positive integer)
+        -ma   Minimum accuracy (positive float)
+        -mi   Maximum number of iterations for the ROPTLIB solver (positive integer) 
+        -mti  Maximum total number of iterations (positive integer)
+        -ubp  Starts the iterations with a branching program given in file <ubpFileName>
+```
+
+- 2) To learn a dataset with a branching program given at the input. In this case, a file containing 
+the branching pogram should be specified using the -ubp "ubpfilename" option. 
+
+```
+./LUBP.exe -mode learn -data [dataSetFilename] -d [Dimension] -w [Window Size] -t [Time] -ma [Accuracy] -mi [Max Iterations] -mti [Max Total Iterations] -ubp [File Name] 
+
+```
+
+3) To evaluate a branching program on a dataset. For instance, one may wish to learn a branching program using a training dataset and test it using a testing dataset. 
+
+
+
+
 ## Download
 
 Open a windows/linux terminal and execute the following command 
@@ -22,10 +67,13 @@ Enter the main folder `LUBP` and type `make BUILD-LUBP` to compile the program.
 
 An executable called `LUBP.exe` will be created in the root folder. 
 
+## Dependencies
 
-To compile our program, type "make" in a linux terminal. Please note that the compilation
-involves both the files of our programs and the files of the external library ROPTLIB.
-The compilation may take some minutes (3 min). 
+Our program is depends on the following libraries
+
+- [ROPTLIB](https://github.com/whuang08/ROPTLIB), which is a library for optimization over Riemanian manifolds. This library will be fetched as a git submodule in the directory */LUBP/ROPTLIB* by executing the git commands in section *Download*. This 
+- 
+Our program also depends on the Boost library (Version 1.71 or greater)
 
 The following requirements must be satisfied in order for the program to be compiled correctly. 
 
