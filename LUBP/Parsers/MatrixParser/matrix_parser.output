@@ -1,0 +1,197 @@
+Grammar
+
+    0 $accept: MATRIX_MATRICES $end
+
+    1 MATRIX_MATRICES: MATRIX_MATRIX MATRIX_MATRICES
+    2                | MATRIX_MATRIX
+
+    3 MATRIX_MATRIX: MATRIX_WORD MATRIX_ROWS
+
+    4 MATRIX_ROWS: MATRIX_ROWS MATRIX_NEWLINE MATRIX_ROW
+    5            | MATRIX_ROW
+
+    6 MATRIX_ROW: MATRIX_ROW MATRIX_COMPLEX_PAIR
+    7           | MATRIX_COMPLEX_PAIR
+
+    8 MATRIX_COMPLEX_PAIR: MATRIX_LEFT_PARENTHESIS MATRIX_DOUBLE MATRIX_COMMA MATRIX_DOUBLE MATRIX_RIGHT_PARENTHESIS
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    MATRIX_NEWLINE <string> (258) 4
+    MATRIX_WORD <string> (259) 3
+    MATRIX_LEFT_PARENTHESIS <string> (260) 8
+    MATRIX_DOUBLE <number> (261) 8
+    MATRIX_COMMA <string> (262) 8
+    MATRIX_RIGHT_PARENTHESIS <string> (263) 8
+
+
+Nonterminals, with rules where they appear
+
+    $accept (9)
+        on left: 0
+    MATRIX_MATRICES (10)
+        on left: 1 2
+        on right: 0 1
+    MATRIX_MATRIX <mat> (11)
+        on left: 3
+        on right: 1 2
+    MATRIX_ROWS <mat> (12)
+        on left: 4 5
+        on right: 3 4
+    MATRIX_ROW <vec> (13)
+        on left: 6 7
+        on right: 4 5 6
+    MATRIX_COMPLEX_PAIR <complexnum> (14)
+        on left: 8
+        on right: 6 7
+
+
+State 0
+
+    0 $accept: . MATRIX_MATRICES $end
+
+    MATRIX_WORD  shift, and go to state 1
+
+    MATRIX_MATRICES  go to state 2
+    MATRIX_MATRIX    go to state 3
+
+
+State 1
+
+    3 MATRIX_MATRIX: MATRIX_WORD . MATRIX_ROWS
+
+    MATRIX_LEFT_PARENTHESIS  shift, and go to state 4
+
+    MATRIX_ROWS          go to state 5
+    MATRIX_ROW           go to state 6
+    MATRIX_COMPLEX_PAIR  go to state 7
+
+
+State 2
+
+    0 $accept: MATRIX_MATRICES . $end
+
+    $end  shift, and go to state 8
+
+
+State 3
+
+    1 MATRIX_MATRICES: MATRIX_MATRIX . MATRIX_MATRICES
+    2                | MATRIX_MATRIX .
+
+    MATRIX_WORD  shift, and go to state 1
+
+    $default  reduce using rule 2 (MATRIX_MATRICES)
+
+    MATRIX_MATRICES  go to state 9
+    MATRIX_MATRIX    go to state 3
+
+
+State 4
+
+    8 MATRIX_COMPLEX_PAIR: MATRIX_LEFT_PARENTHESIS . MATRIX_DOUBLE MATRIX_COMMA MATRIX_DOUBLE MATRIX_RIGHT_PARENTHESIS
+
+    MATRIX_DOUBLE  shift, and go to state 10
+
+
+State 5
+
+    3 MATRIX_MATRIX: MATRIX_WORD MATRIX_ROWS .
+    4 MATRIX_ROWS: MATRIX_ROWS . MATRIX_NEWLINE MATRIX_ROW
+
+    MATRIX_NEWLINE  shift, and go to state 11
+
+    $default  reduce using rule 3 (MATRIX_MATRIX)
+
+
+State 6
+
+    5 MATRIX_ROWS: MATRIX_ROW .
+    6 MATRIX_ROW: MATRIX_ROW . MATRIX_COMPLEX_PAIR
+
+    MATRIX_LEFT_PARENTHESIS  shift, and go to state 4
+
+    $default  reduce using rule 5 (MATRIX_ROWS)
+
+    MATRIX_COMPLEX_PAIR  go to state 12
+
+
+State 7
+
+    7 MATRIX_ROW: MATRIX_COMPLEX_PAIR .
+
+    $default  reduce using rule 7 (MATRIX_ROW)
+
+
+State 8
+
+    0 $accept: MATRIX_MATRICES $end .
+
+    $default  accept
+
+
+State 9
+
+    1 MATRIX_MATRICES: MATRIX_MATRIX MATRIX_MATRICES .
+
+    $default  reduce using rule 1 (MATRIX_MATRICES)
+
+
+State 10
+
+    8 MATRIX_COMPLEX_PAIR: MATRIX_LEFT_PARENTHESIS MATRIX_DOUBLE . MATRIX_COMMA MATRIX_DOUBLE MATRIX_RIGHT_PARENTHESIS
+
+    MATRIX_COMMA  shift, and go to state 13
+
+
+State 11
+
+    4 MATRIX_ROWS: MATRIX_ROWS MATRIX_NEWLINE . MATRIX_ROW
+
+    MATRIX_LEFT_PARENTHESIS  shift, and go to state 4
+
+    MATRIX_ROW           go to state 14
+    MATRIX_COMPLEX_PAIR  go to state 7
+
+
+State 12
+
+    6 MATRIX_ROW: MATRIX_ROW MATRIX_COMPLEX_PAIR .
+
+    $default  reduce using rule 6 (MATRIX_ROW)
+
+
+State 13
+
+    8 MATRIX_COMPLEX_PAIR: MATRIX_LEFT_PARENTHESIS MATRIX_DOUBLE MATRIX_COMMA . MATRIX_DOUBLE MATRIX_RIGHT_PARENTHESIS
+
+    MATRIX_DOUBLE  shift, and go to state 15
+
+
+State 14
+
+    4 MATRIX_ROWS: MATRIX_ROWS MATRIX_NEWLINE MATRIX_ROW .
+    6 MATRIX_ROW: MATRIX_ROW . MATRIX_COMPLEX_PAIR
+
+    MATRIX_LEFT_PARENTHESIS  shift, and go to state 4
+
+    $default  reduce using rule 4 (MATRIX_ROWS)
+
+    MATRIX_COMPLEX_PAIR  go to state 12
+
+
+State 15
+
+    8 MATRIX_COMPLEX_PAIR: MATRIX_LEFT_PARENTHESIS MATRIX_DOUBLE MATRIX_COMMA MATRIX_DOUBLE . MATRIX_RIGHT_PARENTHESIS
+
+    MATRIX_RIGHT_PARENTHESIS  shift, and go to state 16
+
+
+State 16
+
+    8 MATRIX_COMPLEX_PAIR: MATRIX_LEFT_PARENTHESIS MATRIX_DOUBLE MATRIX_COMMA MATRIX_DOUBLE MATRIX_RIGHT_PARENTHESIS .
+
+    $default  reduce using rule 8 (MATRIX_COMPLEX_PAIR)
