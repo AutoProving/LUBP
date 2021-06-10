@@ -84,37 +84,6 @@ bool loadFile(const std::string filename, int* parameters, vector< matrix<int> >
     return true;
 }
 
-/*
-matrix< std::complex<double> > orth(matrix< std::complex<double> > M) {
-
-    const int length = M.size1();
-    matrix< std::complex<double> > r(length, length);
-    matrix< std::complex<double> > q(length, length);
-
-    int k, i, j;
-    for (k = 0; k < length; k++) {
-        r(k,k) = 0; // equivalent to sum = 0
-        for (i = 0; i < length; i++)
-            r(k,k) = r(k,k) + M(i,k) * M(i,k); // rkk = sqr(a0k) + sqr(a1k) + sqr(a2k)
-        r(k,k) = sqrt(r(k,k));
-
-        for (i = 0; i < length; i++) {
-            q(i,k) = M(i,k) / r(k,k);
-        }
-
-        for (j = k + 1; j < length; j++) {
-            r(k,j) = 0;
-            for (i = 0; i < length; i++)
-                r(k,j) += q(i,k) * M(i,j);
-
-            for (i = 0; i < length; i++)
-                M(i,j) = M(i,j) - r(k,j) * q(i,k);
-        }
-    }
-    return M;
-}
-*/
-
 template <class T>
 void populateVect(T& V, const int &start = 0, const int &finish = 0, const int &startvalue=0, const int &step = 1) {
     int length = finish ? finish : V.size();
@@ -159,7 +128,7 @@ void printBranchingProgram(int &d, int &l, int &s, int &c, vector<int> &indices,
 }
 
 void readBranchingProgram(int &matdim, int &l, int &s, int &c, vector<int> &Indices, vector<matrix<std::complex<double>>> &instructions,std::string fileName){
-        // length of the vector instructions is l*s+c
+    // length of the vector instructions is l*s+c
     matrix_in = fopen(fileName.c_str(), "r");
     if (!matrix_in) {
     std::cout<<fileName<<std::endl;
@@ -174,7 +143,7 @@ void readBranchingProgram(int &matdim, int &l, int &s, int &c, vector<int> &Indi
         std::cout<<"Branching Program error!"<<std::endl;
         exit(20);
     }
-    // fir testing purpose
+    // for testing purposes
     printBranchingProgram(matdim,l,s,c,Indices,instructions,"resultTest.txt");
 }
 
@@ -306,7 +275,6 @@ int main(int argc, char *argv[])
             _all_arg +="\n;";
         }
     }
-    //cout<<_all_arg;
     // Create and open a text file
     char filename1[L_tmpnam];
     tmpnam(filename1);
@@ -348,23 +316,11 @@ int main(int argc, char *argv[])
     /////////////////////////////////////////////////////////////////////
     std::string baseName = std::experimental::filesystem::path(inputFileName).stem();
     std::string filename = inputFileName;
-    //char *an_str = automaticNaming;
     int matdim = d;
     std::string fileNameStatistics = baseName + "_d_"+std::to_string(matdim)+"_w_"+std::to_string(windowSize)+"_ma_"+std::to_string(minaccuracy)+"_Statistics.txt";
     std::string fileNameBranchingProgram = baseName + "_d_"+std::to_string(matdim)+"_w_"+std::to_string(windowSize)+"_ma_"+std::to_string(minaccuracy)+"_BranchingProgram.txt";
     std::string fileNameInitialBranchingProgram = baseName + "_d_"+std::to_string(matdim)+"_w_"+std::to_string(windowSize)+"_ma_"+std::to_string(minaccuracy)+"_InitialBranchingProgram.txt";
     std::string fileNameMiddleBranchingProgram = baseName + "_d_"+std::to_string(matdim)+"_w_"+std::to_string(windowSize)+"_ma_"+std::to_string(minaccuracy)+"_MiddleBranchingProgram_";
-
-//    char *an_str = new char[automaticNaming.length() + 1];
-//    strcpy(an_str, automaticNaming.c_str());
-//
-//    if(automaticNaming==""){
-//        sprintf(an_str,"%s_%s_dim_%d_win_%d.dat", an_str,
-//                std::experimental::filesystem::path(filename).filename().c_str(), matdim, windowSize);
-//        __assert(freopen("fff.txt", "w", stdout)!=NULL, "Can't open output file.");
-//    }else{
-//        __assert(freopen("gggg.txt", "w", stdout)!=NULL, "Can't open output file.");
-//    }
 
     input_in = fopen(filename.c_str(), "r");
     if (!input_in) {
@@ -384,15 +340,6 @@ int main(int argc, char *argv[])
     }
     std::cout<<" parameters"<<std::endl;
     std::cout<<"d: "<<matdim<<" l: " <<l<<" s: "<<s <<" c: "<< c<<std::endl;
-//    for(auto item:D ){
-//        std::cout<<"MATRIX"<<std::endl;
-//        for(int i=0; i < item.size1() ; i++){
-//            for(int j=0; j < item.size2(); j++){
-//                std::cout<<item(i,j)<< " ";
-//            }
-//            std::cout<<std::endl;
-//        }
-//    }
     /////////////////////////////////////////////////////////////////////
     if(mode==1){
         freopen(fileNameStatistics.c_str(), "w", stdout);
@@ -437,94 +384,5 @@ int main(int argc, char *argv[])
         double realDist = Distance(s, D, Indices, instructions);
         std::cout<< " discreteDist: " << discreteDist  << "  realDist: " << realDist<<std::endl;
     }
-//    //
-//	__assert(argc != 2 || strcmp(argv[1], parameters_name[par_size]), helpStr(argv[0]));
-//    __assert(argc > 2 && (argc+1)%2==0, "Wrong number of arguments.\n Type -h to see help.");
-//    std::string filename;   bool automatic_naming = false; char *an_str;
-//    for (int i = 1; i < argc; i+=2)
-//    {
-//        bool param_exist = false;
-//        for (int j = 0; j < par_size; j++)
-//        {
-//            if (!strcmp(parameters_name[j], argv[i])){
-//                param_exist = true;
-//                if(j==0) { filename = argv[i+1]; break; }
-//                if(j==1) { __assert(freopen(argv[i+1], "w", stdout)!=NULL, "Can't open output file."); break; }
-//                if(j==2) { automatic_naming = true; an_str = argv[i+1]; break; }
-//
-//                try { parametersArr[j-3] = boost::lexical_cast<double>(argv[i+1]); }
-//                catch (boost::bad_lexical_cast const &){
-//                    __assert(false, "Wrong \"" + std::string(parameters_name[j])+ "\" argument. Type " +
-//                                        std::string(argv[0]) + " -h command to see help." );
-//                }
-//            }
-//        }
-//        __assert(param_exist, "Wrong \"" + std::string(argv[i]) + "\" parameter. Type "+
-//                         std::string(argv[0]) +" -h command to see help.");
-//    }
-//      int matdim = d;
-////    int matdim = parametersArr[0], windowSize = parametersArr[1], killingtime=parametersArr[3],
-////            maxiter = parametersArr[4], maxtotaliterations = parametersArr[5];
-////    double minaccuracy = parametersArr[2];
-//
-//    MAXITERATION = maxiter;
-//
-//    if(automatic_naming){
-//        sprintf(an_str,"%s_%s_dim_%d_win_%d.dat", an_str,
-//                        std::experimental::filesystem::path(filename).filename().c_str(), matdim, windowSize);
-//        __assert(freopen(an_str, "w", stdout)!=NULL, "Can't open output file.");
-//    }
-//
-//    ////////////////////////////////////
-////    int* parameters = new int[4];
-////    vector< matrix<int> > D;
-////
-//
-////
-////    __assert(loadFile(filename, parameters, D), "Wrong filename arg -f [filename].\n Type -h arg to see help.");
-////
-////    // Parameters to be read from file: matdim, l, s, c
-////    int l = parameters[1], s = parameters[2], c = parameters[3];
-//    ///////////////////////////////////////
-//    ////////////////////////////////////////
-//    input_in = fopen(filename.c_str(), "r");
-//    if (!input_in) {
-//        std::perror("File opening failed");
-//        return EXIT_FAILURE;
-//    }
-//    int result_arg=10;
-//    int l=0;
-//    int s=0;
-//    int c=0;
-//    vector< matrix<int> > D;
-//    result_arg = input_parse(l,s,c,D);
-//    if(result_arg!=0){
-//        std::cout<<"error"<<std::endl;
-//        exit(20);
-//    }
-//    std::cout<<"read parameters"<<std::endl;
-//    std::cout<<l<<" "<<s <<" "<< c<<std::endl;
-//    for(auto item:D ){
-//        std::cout<<"MATRIX"<<std::endl;
-//        for(int i=0; i < item.size1() ; i++){
-//            for(int j=0; j < item.size2(); j++){
-//                std::cout<<item(i,j)<< " ";
-//            }
-//            std::cout<<std::endl;
-//        }
-//    }
-//    //////////////////////////////////////
-//    // to be read
-//    vector<int> Indices(l);
-//    populateVect(Indices);
-//    // Instruction matrices
-//    int instructions_length = l * s + c;
-//    vector<matrix<std::complex<double>>> instructions(instructions_length);
-//    matrix< std::complex<double> > randorthM(matdim,matdim);
-//    for (int i = 0; i < instructions_length; i++)
-//    {
-//        getRandOrthMatrix(randorthM);
-//        instructions(i) = randorthM;
-//    }
     return 0;
 }
