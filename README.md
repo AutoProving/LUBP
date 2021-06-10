@@ -9,10 +9,35 @@ to clone this repository.
 
 ```
 git clone https://github.com/AutoProving/LUBP.git
-```
-Enter the main folder `LUBP` and type `make` to compile the program. 
 
-An executable called `LUBP.exe` will be created. 
+git submodule init
+
+git submodule update
+```
+
+
+## Compilation
+
+Enter the main folder `LUBP` and type `make BUILD-LUBP` to compile the program. 
+
+An executable called `LUBP.exe` will be created in the root folder. 
+
+
+To compile our program, type "make" in a linux terminal. Please note that the compilation
+involves both the files of our programs and the files of the external library ROPTLIB.
+The compilation may take some minutes (3 min). 
+
+The following requirements must be satisfied in order for the program to be compiled correctly. 
+
+a) You should use g++ 10.0 or greater and compile with C++ 14 or greater
+b) You will need the BLAS, LAPACK and FFTW to be able to compile our program. To install these
+libraries, use the following commands. 
+
+- sudo apt-get install build-essential
+-	sudo apt-get install liblapack*
+-	sudo apt-get install libblas*
+-	sudo apt-get install libfftw3*
+
 
 ## Usage
 
