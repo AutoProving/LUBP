@@ -17,11 +17,11 @@ To access the help menu, please run.
 
 There are three ways in which our program can be used. 
 
-- 1) To learn branching programs from a given dataset using a random initial 
+1) To learn branching programs from a given dataset using a random initial 
 branching program. With this in mind, execute
 
 ```
-./LUBP.exe -mode learn -data [dataSetFilename] -d [Dimension] -w [Window Size] -t [Time] -ma [Accuracy] -mi [Max Iterations] -mti [Max Total Iterations]
+./LUBP.exe -mode learn -data <dataSetFilename> -d <Dimension> -w <Window Size> -t <Time> -ma <Accuracy> -mi <Max Iterations> -mti <Max Total Iterations>
 
 where 
         -f    Input filename (MANDATORY)(requires formated input file)
@@ -30,22 +30,23 @@ where
         -t    Killing time in seconds (positive integer)
         -ma   Minimum accuracy (positive float)
         -mi   Maximum number of iterations for the ROPTLIB solver (positive integer) 
-        -mti  Maximum total number of iterations (positive integer)
+        -mti  Maximum total number of iterations. Each iteration updates one instruction (positive integer)
         -ubp  Starts the iterations with a branching program given in file <ubpFileName>
 ```
 
-- 2) To learn a dataset with a branching program given at the input. In this case, a file containing 
+2) To learn a dataset with a branching program given at the input. In this case, a file containing 
 the branching pogram should be specified using the -ubp "ubpfilename" option. 
 
 ```
-./LUBP.exe -mode learn -data [dataSetFilename] -d [Dimension] -w [Window Size] -t [Time] -ma [Accuracy] -mi [Max Iterations] -mti [Max Total Iterations] -ubp [File Name] 
+./LUBP.exe -mode learn -data <dataSetFilename> -d <Dimension> -w <Window Size> -t <Time> -ma <Accuracy> -mi <Max Iterations> -mti <Max Total Iterations> -ubp <File Name> 
 
 ```
 
 3) To evaluate a branching program on a dataset. For instance, one may wish to learn a branching program using a training dataset and test it using a testing dataset. 
 
-
-
+```
+./LUBP.exe -mode evaluate -data <dataSetFileName> -ubp <ubpFileName>
+```
 
 ## Download
 
@@ -85,9 +86,6 @@ libraries, use the following commands.
 -	sudo apt-get install liblapack*
 -	sudo apt-get install libblas*
 -	sudo apt-get install libfftw3*
-
-
-## Usage
 
 
 ## Input/Output Formats
