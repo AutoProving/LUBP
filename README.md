@@ -104,7 +104,7 @@ Please report bugs or ask questions using the issue tracker a [https://github.co
 To cite our heuristics, please refer to the following paper.
 
 Fidel Ernesto Díaz Andino, Maria Kokkou, Mateus de Oliveira Oliveira, Farhad Vadiee. Unitary Branching Programs: Learnability and Lower Bounds. 
-38 International Conference on Machine Learning (ICML 2021)
+38-th International Conference on Machine Learning (ICML 2021)
 
 ## Acknowledgements 
 
