@@ -73,7 +73,7 @@ An executable called `LUBP.exe` will be created in the root folder.
 Our program is depends on the following libraries
 
 - We recommend compiling using g++ 9.2 or greater and compile with C++ 14 or greater
-- [ROPTLIB](https://github.com/whuang08/ROPTLIB), which is a library for optimization over Riemanian manifolds. This library will be fetched as a git submodule in the directory "/LUBP/ROPTLIB" by executing the following commands: 
+- [ROPTLIB](https://github.com/whuang08/ROPTLIB), which is a library for optimization over Riemanian manifolds. This library will be fetched as a git submodule into the directory "/LUBP/ROPTLIB" by executing the following commands: 
 ```
 git submodule init
 
