@@ -30,7 +30,7 @@ where
         -t    Killing time in seconds (positive integer)
         -ma   Minimum accuracy (positive float)
         -mi   Maximum number of iterations for the ROPTLIB solver (positive integer) 
-        -mti  Maximum total number of iterations. Each iteration updates one instruction (positive integer)
+        -mti  Maximum total number of iterations. Each iteration updates one instruction the instructions in the current window
         -ubp  Starts the iterations with a branching program given in file <ubpFileName>
 ```
 
