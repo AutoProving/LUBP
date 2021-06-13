@@ -1,3 +1,29 @@
+/**************************************************************************
+LUBP: Learning Unitary Branching Programs
+
+Copyright 2021 Mateus de Oliveira Oliveira and Farhad Vadiee.
+
+Copyright 2020 Mateus de Oliveira Oliveira and Fidel Ernesto Dias Andino
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+****************************************************************************/
+
+
+
+
+
+
 #include "stiefel_stuff.h"
 
 vector < matrix< std::complex<double> > > lubpInstructionProblemSolve(const int& s, const int& l, const int& c,
@@ -12,14 +38,10 @@ vector < matrix< std::complex<double> > > lubpInstructionProblemSolve(const int&
 	//int w = listpositions.size();
 	vector < matrix< std::complex<double> > > result(lsize);
 
-    // Define the Stiefel manifold
-    CStiefel mani1(k, k);
-   //mani1.ChooseParamsSet1();
- 	integer numoftypes = 1; // kinds of manifolds
-    //  integer numofmani1 = 2; // the first one has two
-    ProductManifold Domain(numoftypes, &mani1, static_cast<integer>(lsize));//, &mani2, numofmani2);
-   // Vector CStieX(numoftypes, &mani1, static_cast<integer>(w));	
-//	Domain.SetIsIntrApproach(false);
+	// Define the Stiefel manifold
+	CStiefel mani1(k, k);
+ 	integer numoftypes = 1; // One type of manifold
+	ProductManifold Domain(numoftypes, &mani1, static_cast<integer>(lsize));//, &mani2, numofmani2);
 	
    	Vector X(k, k, "complex");
 	Variable CStieX (1, &X, static_cast<integer>(lsize));//l matices of dimension KxK
@@ -35,8 +57,6 @@ vector < matrix< std::complex<double> > > lubpInstructionProblemSolve(const int&
 				CStieXptr[mm*k+nn].r = static_cast<realdp> (localmatrices(matrix_idx)(mm,nn).real());
 				CStieXptr[mm*k+nn].i = static_cast<realdp> (localmatrices(matrix_idx)(mm,nn).imag());
 
-				// CStieXptr[nn*k+mm].r = static_cast<realdp> (localmatrices(matrix_idx)(mm,nn).real());
-				// CStieXptr[nn*k+mm].i = static_cast<realdp> (localmatrices(matrix_idx)(mm,nn).imag());
 				CStieX.RemoveAllFromFields();
 			}
 		}
@@ -52,7 +72,6 @@ vector < matrix< std::complex<double> > > lubpInstructionProblemSolve(const int&
 	LRBFGSsolver->Verbose = NOOUTPUT; //ITERRESULT;//
 	LRBFGSsolver->Max_Iteration = MAXITERATION;
    
- //   Prob.CheckGradHessian(CStieX);
    
     LRBFGSsolver->Run();
 	
@@ -69,8 +88,6 @@ vector < matrix< std::complex<double> > > lubpInstructionProblemSolve(const int&
 				result(matrix_idx)(mm,nn).real(local_result_ptr[mm*k+nn].r);
 				result(matrix_idx)(mm,nn).imag(local_result_ptr[mm*k+nn].i);
 
-				// result(matrix_idx)(mm,nn).real(local_result_ptr[nn*k+mm].r);
-				// result(matrix_idx)(mm,nn).imag(local_result_ptr[nn*k+mm].i);
 			}
 		}		
 		local_result_ptr+=k*k;
@@ -87,8 +104,7 @@ vector < matrix< std::complex<double> > > lubpClassesProblemSolve(const int& s, 
 			const vector < vector <matrix< std::complex<double> > > >& evaluatedMatrices)
 {
 	vector < matrix< std::complex<double> > > result(c);
-    integer numoftypes = 1; // one kind of manifolds
-    //integer numofmani1 = 2; // the first one has two
+    integer numoftypes = 1; // one type of manifold
 
     // Define the Stiefel manifold
     CStiefel mani1(k, k);
@@ -96,12 +112,10 @@ vector < matrix< std::complex<double> > > lubpClassesProblemSolve(const int& s, 
     mani1.ChooseParamsSet1();
 
     ProductManifold Domain(numoftypes, &mani1, static_cast<integer>(c));//, &mani2, numofmani2);
-	//Vector CStieX(numoftypes, &mani1, static_cast<integer>(c));	
 
 	Vector X(k, k, "complex");
 	Vector CStieX(1, &X, static_cast<integer>(c));
 
-    //Variable CStieX(k,k, "complex"); //= Domain.RandominManifold();	
 	realdpcomplex *CStieXptr = (realdpcomplex *) CStieX.ObtainWriteEntireData();	
 
 	for(int matrix_idx=0; matrix_idx<c; matrix_idx++){	
@@ -112,8 +126,6 @@ vector < matrix< std::complex<double> > > lubpClassesProblemSolve(const int& s, 
 				CStieXptr[mm*k+nn].r = static_cast<realdp> (localmatrices(matrix_idx)(mm,nn).real());
 				CStieXptr[mm*k+nn].i = static_cast<realdp> (localmatrices(matrix_idx)(mm,nn).imag());				
 
-				// CStieXptr[nn*k+mm].r = static_cast<realdp> (localmatrices(matrix_idx)(mm,nn).real());
-				// CStieXptr[nn*k+mm].i = static_cast<realdp> (localmatrices(matrix_idx)(mm,nn).imag());				
 			}
 		}
 		CStieXptr+=k*k;
@@ -126,8 +138,6 @@ vector < matrix< std::complex<double> > > lubpClassesProblemSolve(const int& s, 
 	RSDsolver->Verbose =  NOOUTPUT;//---ITERRESULT;
 
 	RSDsolver->Max_Iteration = MAXITERATION;
-	//RSDsolver->OutputGap = 1;
-	// RSDsolver->CheckParams();
 	RSDsolver->Run();
 
 	Variable local_result = RSDsolver->GetXopt();//--
@@ -142,8 +152,6 @@ vector < matrix< std::complex<double> > > lubpClassesProblemSolve(const int& s, 
 				result(matrix_idx)(mm,nn).real(local_result_ptr[mm*k+nn].r);
 				result(matrix_idx)(mm,nn).imag(local_result_ptr[mm*k+nn].i);
 
-				// result(matrix_idx)(mm,nn).real(local_result_ptr[nn*k+mm].r);
-				// result(matrix_idx)(mm,nn).imag(local_result_ptr[nn*k+mm].i);
 			}
 		}	
 		local_result_ptr+=k*k;		
