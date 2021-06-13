@@ -3,7 +3,7 @@ LUBP: Learning Unitary Branching Programs
 
 Copyright 2021 Mateus de Oliveira Oliveira and Farhad Vadiee.
 
-Copyright 2020 Mateus de Oliveira Oliveira and Fidel Ernesto Dias Andino
+Copyright 2020 Mateus de Oliveira Oliveira and Fidel Ernesto Diaz Andino
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
