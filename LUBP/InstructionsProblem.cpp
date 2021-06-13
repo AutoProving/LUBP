@@ -1,3 +1,25 @@
+/**************************************************************************
+LUBP: Learning Unitary Branching Programs
+
+Copyright 2021 Mateus de Oliveira Oliveira and Farhad Vadiee.
+
+Copyright 2020 Mateus de Oliveira Oliveira and Fidel Ernesto Dias Andino
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+****************************************************************************/
+
+
 #include "InstructionsProblem.h"
 
 /*Define the namespace*/
@@ -44,8 +66,6 @@ namespace ROPTLIB{
 				{   
 					lm(matrix_idx)(mm,nn).real(xptr[mm*k+nn].r);
 					lm(matrix_idx)(mm,nn).imag(xptr[mm*k+nn].i);
-					// lm(matrix_idx)(mm,nn).real(xptr[nn*k+mm].r);
-					// lm(matrix_idx)(mm,nn).imag(xptr[nn*k+mm].i);
 				}
 			}
 			xptr+=k*k;
@@ -91,11 +111,9 @@ namespace ROPTLIB{
 
 	double InstructionsProblem::DistanceMatrices(const matrix<std::complex<double>>& M1, const matrix<std::complex<double>>& M2) const
 	{
-		//c = sum(conj(a).*b); sum of conjugate of M1, element wise product b;
 
 		matrix<std::complex<double>> p = element_prod(conj(M1), M2);
-		vector<std::complex<double>> s = vector<double>(M1.size2(), 1) - 
-											prod(scalar_vector<double>(p.size1(), 1), p);
+		vector<std::complex<double>> s = vector<double>(M1.size2(), 1) - prod(scalar_vector<double>(p.size1(), 1), p);
 
 		return norm_2_square(s);
 		
@@ -114,33 +132,4 @@ namespace ROPTLIB{
 
 		return prod(M, rightMatrices(classes)(a));
 	}
-	
-	Vector &InstructionsProblem::EucGrad(const Variable &x, Vector *result) const
-    {//Compute Numerical Gradient: by Sean Martin, modified by WH
-        
-        realdp _eps = 1e-8;
-        
-        realdp fx = f(x);
-        size_t nn = x.Getlength();
-        Variable x_eps = x;
-        
-        const realdp *x_ptr = x.ObtainReadData();
-        realdp *x_eps_ptr = x_eps.ObtainWriteEntireData();
-        Vector egf(x);
-        realdp *egf_ptr = result->ObtainWriteEntireData();
-        
-        for (size_t i = 0; i < nn; ++i) {
-            x_eps_ptr[i] = x_ptr[i];
-        }
-        
-        for (size_t i = 0; i < nn; ++i) {
-            x_eps_ptr[i] += _eps;
-            x_eps.RemoveAllFromFields();
-            double fp = f(x_eps);
-            egf_ptr[i] = (fp - fx) / _eps;
-            x_eps_ptr[i] = x_ptr[i];
-        }
-        return *result;
-	}
-	
 }

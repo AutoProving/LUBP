@@ -41,5 +41,6 @@ UPPER_TP  = $(shell echo $(TP) | tr a-z A-Z)
 LUBPCPPS := $(ROOTPATH)/LUBP/ClassesProblem.cpp  $(ROOTPATH)/LUBP/LUBP.cpp  $(ROOTPATH)/LUBP/InstructionsProblem.cpp  $(ROOTPATH)/LUBP/mat_operations.cpp  $(ROOTPATH)/LUBP/randn.cpp  $(ROOTPATH)/LUBP/stiefel_stuff.cpp
 
 PARSER :=  $(ROOTPATH)/LUBP/Parsers/CommandParser/command_parser.cpp $(ROOTPATH)/LUBP/Parsers/CommandParser/command_lexer.cpp  $(ROOTPATH)/LUBP/Parsers/InputParser/input_parser.cpp $(ROOTPATH)/LUBP/Parsers/InputParser/input_lexer.cpp $(ROOTPATH)/LUBP/Parsers/MatrixParser/matrix_parser.cpp $(ROOTPATH)/LUBP/Parsers/MatrixParser/matrix_lexer.cpp
-LUBPRUN:
+
+BUILD_LUBP:
 	$(CC) -O3 -w -std=c++0x  $(PARSER) $(LUBPCPPS)  $(CPPS)   $(INCDIRS) -D$(UPPER_TP) -DROPTLIB_WITH_FFTW  -static -llapack -lblas -lfftw3 -lm -static -lpthread -lgfortran -lquadmath -lstdc++fs   -o LUBP.exe -std=c++14
