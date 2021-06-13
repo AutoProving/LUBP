@@ -1,6 +1,6 @@
 # LUBP - Learning Unitary Branching Programs
 
-LUBP implements an heuristic for the problem of learning unitary branching programs.
+LUBP implements an heuristic for the problem of learning unitary branching programs consistent with an input dataset.
 
 # Usage
 
