@@ -81,15 +81,16 @@ git submodule update
 
 ```
 - Boost library (Version 1.71 or greater)
-- BLAS, LAPACK and FFTW libraries. To install these libraries, use the following commands. 
+- BLAS, LAPACK and FFTW libraries. 
+- gfortran library
 
 ```
 - sudo apt-get install build-essential
--	sudo apt-get install liblapack*
--	sudo apt-get install libblas*
--	sudo apt-get install libfftw3*
+- sudo apt-get install liblapack*
+- sudo apt-get install libblas*
+- sudo apt-get install libfftw3*
+- sudo apt-get install gfortran
 ```
-
 
 
 ## Input/Output Formats
